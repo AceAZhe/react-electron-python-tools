@@ -1,0 +1,87 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.w100{
+    width: 100%;
+}
+.h100,body,html,#root{
+    height: 100%;
+}
+.flex{
+    display: flex;
+}
+.a-start{
+    align-items: flex-start;
+}
+.a-center{
+    align-items: center;
+}
+.a-end{
+    align-items: flex-end;
+}
+.j-start{
+    justify-content: flex-start;
+}
+.j-center{
+    justify-content: center;
+}
+.j-end{
+    justify-content: flex-end;
+}
+.while{
+    background: white;
+}
+.flex-row{
+    flex-direction: row;
+}
+.flex-column{
+    flex-direction: column;
+}
+.flex-1{
+    flex: 1;
+}
+.flex-shrink{
+    flex-shrink: 0;
+}
+.not-select{
+    -moz-user-select:none; /*火狐*/
+    -webkit-user-select:none; /*webkit浏览器*/
+    -ms-user-select:none; /*IE10*/
+    -khtml-user-select:none; /*早期浏览器*/
+    user-select:none;
+}
+::-webkit-scrollbar{
+    width: 4px;
+    height: 4px;
+    background-color: transparent;
+}
+/*滚动条的轨道*/
+::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+/*滚动条的滑块按钮*/
+::-webkit-scrollbar-thumb{
+    border-radius: 0;
+    background-color: rgba($color: #000000, $alpha: 0.04);
+    box-shadow: inset 0 0 2px rgba($color: #000000, $alpha: 0.04);
+}
+/*滚动条的上下两端的按钮*/
+::-webkit-scrollbar-button{
+    height: 0;
+    background-color: transparent;
+}
+.content-main{
+    height: calc(100% - 32px);
+    margin: 16px 0 0 0;
+    background: #fff;
+    padding: 10px 10px 0 10px;
+    border-radius: 4px;
+    overflow-y: auto;
+}
+.nowrap{
+    white-space: nowrap;      /*超出的空白区域不换行*/
+    overflow: hidden;         /*超出隐藏*/
+    text-overflow: ellipsis;  /*文本超出显示省略号*/
+}

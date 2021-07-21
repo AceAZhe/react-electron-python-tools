@@ -1,0 +1,30 @@
+.right-content{
+    &-list{
+        height: calc(100% - 118px);
+        &-left{
+            width: 180px;
+            border-right: 1px solid rgba(0, 0, 0, 0.06);
+            padding-right: 10px;
+            margin-right: 20px;
+        }
+        &-right{
+            width: calc(100% - 200px);
+            font-size: 12px;
+            white-space: break-spaces;
+            word-break: break-all;
+            padding-right: 10px;
+            overflow-y: auto;
+        }
+    }
+    .drop-area{
+        width: 200px;
+        height: 80px;
+        text-align: center;
+        line-height: 78px;
+        border: 1px dotted rgba($color: #000000, $alpha: 0.1);
+        border-radius: 4px;
+        background: rgba($color: #000000, $alpha: 0.03);
+        color: #606266;
+        cursor: pointer;
+    }
+}

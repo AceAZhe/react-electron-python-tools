@@ -1,0 +1,10 @@
+.wxScreenshot{
+    .img-wrap{
+        height: calc(100% - 80px);
+        overflow: auto;
+    }
+    .ant-tabs-content.ant-tabs-content-top{
+        height: 100%;
+    }
+}
+
