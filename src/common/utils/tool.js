@@ -1,5 +1,9 @@
 const path = require("path");
 const child_process = require("child_process");
+const EventEmitter = require('events');
+const peer = new EventEmitter();
+const { desktopCapturer } = require('electron');
+
  
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
@@ -20,6 +24,29 @@ export default {
             } catch (err) {
                 console.log(err);
             }
+        })
+    },
+    async remoteDesktopControl(selector) {
+        const sources = await desktopCapturer.getSources({ types: ['screen'] });
+        navigator.webkitGetUserMedia({
+            audio: false,
+            video: {
+                mandatory: {
+                    chromeMediaSource: 'desktop',
+                    chromeMediaSourceId: sources[0].id,
+                    maxWidth: window.screen.width,
+                    maxHeight:window.screen.height
+                }
+            }
+        }, stream => {
+            peer.emit('add-stream', stream);     
+            const video = document.querySelector(selector);
+            video.srcObject = stream;
+            video.onloadedmetadata = () => {
+                video.play();
+            }
+        }, err => {
+            console.log(err);          
         })
     }
 }

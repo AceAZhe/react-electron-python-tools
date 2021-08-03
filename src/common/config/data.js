@@ -1,19 +1,13 @@
 import {
     DropboxOutlined,
     LinkedinOutlined,
-    SkypeOutlined
+    SlackOutlined
   } from '@ant-design/icons';
 import WxScreenshot from '@/pages/Tools/comp/wxScreenshot.js';
 import ColorPicker from '@/pages/Tools/comp/colorPicker.js';
 import logoUrl from '../../assets/images/logo.png';
 
 export const menuList = [
-    // {
-    //     icon: <SkypeOutlined />,
-    //     name: '使用说明',
-    //     path:'/doc',
-    //     prop: 'doc'
-    // },
     {
         icon: <DropboxOutlined />,
         name: '应用调试',
@@ -24,6 +18,11 @@ export const menuList = [
         name: '集成工具',
         path:'/tools',
         prop: 'tools'
+    },{
+        icon: <SlackOutlined />,
+        name: '远程桌面',
+        path:'/remoteDesktop',
+        prop: 'remoteDesktop'
     }
 ]
 
@@ -43,9 +42,4 @@ export const tabList=[
         prop:'colorPicker',
         tem: <ColorPicker />
     }
-    // , {
-    //     name:'远程控制',
-    //     prop:'remoteControl',
-    //     tem: <div></div>
-    // }
 ];

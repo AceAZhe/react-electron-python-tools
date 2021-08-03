@@ -1,6 +1,5 @@
 import { Button,  Divider } from 'antd';
 import Tool from '@/common/utils/tool.js';
-const { ipcRenderer } = window.require('electron');
 
 const ColorPicker = () => {
     const startUp = () => {

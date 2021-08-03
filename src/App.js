@@ -20,7 +20,7 @@ const App = () => {
     <Layout>
       <BrowserRouter>
       <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} width={150}>
-        <Logo/>
+          <Logo collapsed={collapsed}/>
         <Left/>
       </Sider>
       <Layout>

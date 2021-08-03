@@ -1,15 +1,9 @@
-const { app, BrowserWindow, Menu, ipcMain,globalShortcut } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, globalShortcut } = require('electron');
 
 const path = require('path');
 
 let mainWindow = null;
-
-app.on('ready', () => {
-  initAppEvent();
-  createWindow();
-  initMaindowEvent();
-  initIpcMain();
-});
+let remoteControlWindow = null;
 
 const createWindow = () => {
   mainWindow = new BrowserWindow({
@@ -22,7 +16,7 @@ const createWindow = () => {
     webPreferences: {
       nodeIntegration: true,
       webSecurity: false,
-      contextIsolation:false
+      contextIsolation: false
     }
   })
 
@@ -36,6 +30,21 @@ const createWindow = () => {
   mainWindow.webContents.openDevTools();
 }
 
+
+const showRemoteControlWindow = () => {
+  remoteControlWindow = new BrowserWindow({
+    width: 1000,
+    height: 680,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false
+    }
+  })
+
+  const startUrl = path.join(__dirname, "./remote-control.html");
+  console.log('startUrl', startUrl);
+  remoteControlWindow.loadURL(startUrl);
+}
 
 const initMaindowEvent = () => {
   mainWindow.on('closed', () => {
@@ -60,11 +69,10 @@ const initAppEvent = () => {
 
 const initIpcMain = () => {
   ipcMain.on('wx-screenshot', () => {
-    if(mainWindow.isMinimized()){
-       mainWindow.restore();
-       mainWindow.focus();
+    if (mainWindow.isMinimized()) {
+      mainWindow.restore();
+      mainWindow.focus();
     }
-     
   })
 
   ipcMain.on('min-window', (e, arg) => {  //最小化窗口
@@ -74,18 +82,18 @@ const initIpcMain = () => {
     }
   })
 
-  ipcMain.on('save-file', (e,arg) => {
+  ipcMain.on('save-file', (e, arg) => {
     mainWindow.webContents.downloadURL(arg);
   })
 
   ipcMain.on('register-screenshot-key', (e) => {
-    globalShortcut.register("CommandOrControl+X",()=>{
+    globalShortcut.register("CommandOrControl+X", () => {
       mainWindow.webContents.send('key-wx-screenshot');
     });
   })
 
   ipcMain.on('register-screenshot-key', (e) => {
-    globalShortcut.register("CommandOrControl+X",()=>{
+    globalShortcut.register("CommandOrControl+X", () => {
       mainWindow.webContents.send('key-wx-screenshot');
     });
   })
@@ -93,5 +101,26 @@ const initIpcMain = () => {
   ipcMain.on('unregister-screenshot-key', (e) => {
     globalShortcut.unregisterAll();
   })
+
+  ipcMain.handle('get-local-code', e => {
+    let num = Math.floor(Math.random() * (999999999 - 100000000) + 100000000) + '';
+    num = num.replace(/\s/g, '').replace(/(\w{3})(?=\w)/g, '$1 ');
+    return num;
+  })
+
+  ipcMain.on('control-remote-desktop', (e, val) => {
+    console.log('control-remote-desktop');
+    showRemoteControlWindow();
+  })
+
 }
 
+
+
+app.whenReady().then(() => {
+  initAppEvent();
+  createWindow();
+  initMaindowEvent();
+  initIpcMain();
+  require('./new-robot.js')();
+})

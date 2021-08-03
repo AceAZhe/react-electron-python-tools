@@ -1,11 +1,8 @@
-
 import './index.scss';
 import { useState, useRef, useEffect } from 'react';
 import { Form, Input, Button, Row, Col, Divider, List } from 'antd';
 import Tool from '@/common/utils/tool.js';
-import {
-    LoadingOutlined
-} from '@ant-design/icons';
+
   
 const getPort = require("get-port");
 const path = require("path");
@@ -53,6 +50,7 @@ const RightContent = () => {
 
     const handleSpawn=(chunk)=>{
         const str = chunk.toString();
+        // eslint-disable-next-line
         const newStr = str.replace(/\[32m/g, "").replace(/\[32m/g, "").replace(/\[39m/g, "");
         setContent(res => res + newStr);
     }

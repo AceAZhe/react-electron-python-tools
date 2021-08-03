@@ -1,0 +1,1 @@
+xcopy "%cd%\electron\main.js" "%cd%\public\electron.js" /d /e /r /k

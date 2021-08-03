@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>远程控制桌面</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #screen-video{
+            width:100%;
+            height:100%;
+            object-fit: fill;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <video id='screen-video'></video>
+    </div>
+    <script> 
+        const peer = require('./peer-control');    
+        let video = document.getElementById('screen-video');
+        
+        const play=(stream)=>{
+            video.srcObject=stream;
+            video.onloadedmetadata=()=>{
+                video.play();
+            }
+        }
+
+        peer.on('add-stream', (stream) => {
+            play(stream)
+        })
+
+        window.onkeydown = (e) =>{
+            const data = {
+                keyCode: e.keyCode,
+                shift: e.shiftKey,
+                meta: e.metaKey,
+                control: e.ctrlKey,
+                alt: e.altKey
+            }
+            peer.emit('robot', 'key', data) 
+        }
+
+        window.onmouseup = (e)=> {
+            const data = {
+                clientX:e.clientX,
+                clientY:e.clientY,
+                video:{
+                    width: video.getBoundingClientRect().width,
+                    height: video.getBoundingClientRect().height
+                }
+            }
+            peer.emit('robot', 'mouse', data)
+        }
+    </script>
+</body>
+</html>

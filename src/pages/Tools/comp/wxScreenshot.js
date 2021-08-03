@@ -6,6 +6,7 @@ import {
     QuestionCircleOutlined
 } from '@ant-design/icons';
 
+
 const child_process = require('child_process');
 const path = window.require('path');
 const { ipcRenderer, clipboard } = window.require('electron');
@@ -15,16 +16,15 @@ const { shell } = window.require('electron');
 const WxScreenshot = (props) => {
     const { type } = props;
     const typeText = useMemo(() => {
-        return type === 'image' ? '截图（CommandOrControl+X）' : '录屏（ESC终止）';
+        return type === 'image' ? `截图` : '录屏';
     }, [type])
     const [imgUrl, setImgSrc] = useState('');
     const [value, setValue] = useState(true);
     const [videoPath, setVideoPath] = useState('');
-    const [videUrl, setVideoUrl] = useState('');
     const [loading, setLoading] = useState(false);
 
     const tooltip = useMemo(() => {
-        return type === 'image' ? '需要在当前页面才能使用快捷键' : 'ESC键终止录屏';
+        return type === 'image' ? '需要在当前页面才能使用快捷键（CommandOrControl+X）终止' : 'ESC键终止录屏';
     }, [type])
 
     const onChange = e => {
@@ -85,7 +85,8 @@ const WxScreenshot = (props) => {
         return () => {
             ipcRenderer.send('unregister-screenshot-key');
         }
-    }, []);
+        // eslint-disable-next-line
+    }, [type]);
 
     return (
         <div className='wxScreenshot h100'>
